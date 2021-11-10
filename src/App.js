@@ -1,24 +1,40 @@
-import logo from './logo.svg';
+import React from 'react';
+import {useState, useEffect} from "react";
+import Rijksmuseum from "./components/Rijksmuseum";
+import axios from "axios";
 import './App.css';
 
 function App() {
+  const [ rijksmuseum, setRijksmuseum ]  = useState([]);
+  const [ endpoint, setEndpoint] = useState('https://www.rijksmuseum.nl/api/nl/collection?key=RNGVwSHj')
+
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        const result = await axios.get(endpoint);
+        console.log(result.data);
+        setRijksmuseum(result.data)
+      } catch (e) {
+        console.error(e)
+      }
+    }
+    fetchData();
+  }, [endpoint])
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+      <div className="collectie">
+        {rijksmuseum &&
+        <>
+          {Object.keys(rijksmuseum).length > 0 && <div>{rijksmuseum.results.map((rijksmuseumId) => {
+                return (
+                    <Rijksmuseum rijksmuseumId={rijksmuseumId.url}/>
+                )
+              }
+          )};
+          </div> }
+        </>
+        }
+      </div>
   );
 }
 
