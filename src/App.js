@@ -1,6 +1,6 @@
 import React from 'react';
 import {useState, useEffect} from "react";
-import Rijksmuseum from "./components/Rijksmuseum";
+import Rijksmuseum from "./components/Rijksmuseum/Rijksmuseum";
 import axios from "axios";
 import './App.css';
 
