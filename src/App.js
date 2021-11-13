@@ -8,7 +8,7 @@ import './App.css';
 const apiKey = 'RNGVwSHj';
 
 function App({RijksmuseumUrl}) {
-    const [ collectionData, setCollectiondata ]  = useState([]);
+    const [ collectionData, setCollectiondata ]  = useState({});
     const [ type, setType ] = useState('')
     const [ endpoint, setEndpoint] = useState('https://www.rijksmuseum.nl/api/nl/collection?key=RNGVwSHj&q=${type}')
 
