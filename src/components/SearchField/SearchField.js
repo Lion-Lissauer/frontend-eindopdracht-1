@@ -1,14 +1,14 @@
 // import { Link } from 'react-router-dom';
 import React, {useState, useEffect} from 'react';
 
-function SearchField({setTypeHandler}) {
+function SearchField({setObjectNumberHandler}) {
     const [query, setQuery] = useState('');
 
     function onFormSubmit(e) {
         e.preventDefault();
         console.log('submitted!');
 
-        setTypeHandler(query);
+        setObjectNumberHandler(query);
     }
 
     return (
@@ -18,11 +18,11 @@ function SearchField({setTypeHandler}) {
                 name="search"
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
-                placeholder="Zoek item"
+                placeholder="Zoekterm"
             />
 
             <button type="submit">
-                Zoek
+                Zoeken
             </button>
         </form>
     );

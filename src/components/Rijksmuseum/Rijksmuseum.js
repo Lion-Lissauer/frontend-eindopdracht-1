@@ -4,13 +4,14 @@ import './Rijksmuseum.css';
 
 const apiKey = 'RNGVwSHj';
 
-function Rijksmuseum({RijksmuseumURL})  {
+function Rijksmuseum()  {
     const [ rijksmuseum, setRijksmuseum ] = useState(null);
+    const [ search, setSearch ] = useState('');
 
     useEffect(() => {
         async function fetchData() {
             try {
-                const result = await axios.get(RijksmuseumURL);
+                const result = await axios.get(`https://www.rijksmuseum.nl/api/nl/collection?key=${apiKey}&q=${search}`);
                 console.log(result.data);
                 console.log(result.data.moves.length);
                 console.log(result.data.weight);

@@ -1,46 +1,50 @@
 import React from 'react';
 import {useState, useEffect} from "react";
-import axios from "axios";
+import axios from 'axios';
 // import Rijksmuseum from "./components/Rijksmuseum/Rijksmuseum";
 import SearchField from "./components/SearchField/SearchField";
 import './App.css';
 
-const apiKey = 'RNGVwSHj';
+const apiKey = '5TRRnpGR';
 
-function App({RijksmuseumUrl}) {
-    const [ collectionData, setCollectiondata ]  = useState({});
-    const [ type, setType ] = useState('')
-    const [ endpoint, setEndpoint] = useState('https://www.rijksmuseum.nl/api/nl/collection?key=RNGVwSHj&q=${type}')
+
+function App() {
+    const [ artObjectsData, setArtObjectsData ]  = useState({});
+    const [ objectNumber, setObjectNumber ] = useState('')
+    // const [ endpoint, setEndpoint] = useState(`https://www.rijksmuseum.nl/api/nl/collection?key=5TRRnpGR`)
 
     useEffect(() => {
         async function fetchData() {
             try {
-                const result = await axios.get(endpoint);
+                const result = await axios.get(`https://www.rijksmuseum.nl/api/nl/collection?q=${objectNumber}&key=${apiKey}`);
                 console.log(result.data);
-                setCollectiondata(result.data)
+                setArtObjectsData(result.data)
             } catch (e) {
                 console.error(e)
             }
-        };
+        }
 
-        if (endpoint) {
+        if (objectNumber) {
             fetchData();
         }
-    }, [endpoint]);
+    }, [objectNumber]);
 
     return (
         <div className="result-container">
             <div className="result-header">
-                <SearchField setTypeHandler={setType}/>
+                <SearchField setObjectNumberHandler={setObjectNumber}/>
 
                 {/*{error && <span className="no-result-error">Geen resultaat</span>}*/}
 
-                <span className="collectie">
-                        {Object.keys(collectionData).length > 0 && <>
-                            <img alt="Image" src={collectionData.url} width="300" height="500"/>
-                            <h1><strong>{collectionData.title} " - " {collectionData.artObject.dating}</strong></h1>
-                            <h2><strong>{collectionData.name}</strong></h2>
-                            <h3>{collectionData.artObject.description}</h3></>}
+                <span className="art-objects">
+                        {Object.keys(artObjectsData).length > 0 &&
+                        <>
+                            <img alt="{artObjectsData.name}" src={artObjectsData.artObjects[0].webImage.url} width="30%" height="30%"/>
+                            <h1><strong>{artObjectsData.artObjects[0].longTitle}</strong></h1>
+                            <h2><strong>{artObjectsData.artObjects[0].description}</strong></h2>
+                            <h3>{artObjectsData.artObjects[0].description}</h3>
+                        </>
+                        }
                     </span>
             </div>
         </div>
